@@ -1,0 +1,84 @@
+<html>
+    <head>
+        <title>Exercice 18</title>
+        
+        <style>
+            
+            html,body{
+                scroll-behavior: smooth;
+            }
+            
+            .header{
+                position: fixed;
+                text-align: center;
+                top: 0;
+                left: 0;
+                right: 0;
+                padding: 2rem;
+                font-size: 2rem;
+                color: black;
+                background: white;
+                box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            }
+            
+            .zoneScroll{
+                height: 1000px;
+            }
+            
+            
+            .header[color="red"]{background: red;color: white;}
+            .header[color="blue"]{background: blue;color: white;}
+            .header[color="purple"]{background: purple;color: white;}
+            .header[color="cyan"]{background: cyan;color: white;}
+            .header[color="green"]{background: green;color: white;}
+            .header[color="yellow"]{background: yellow;color: white;}
+            
+            
+            .zoneRed{background: red;}
+            .zoneBlue{background: blue;}
+            .zonePurple{background: purple;}
+            .zoneCyan{background: cyan;}
+            .zoneGreen{background: green;}
+            .zoneYellow{background: yellow;}
+            
+        </style>
+        
+    </head>
+    <body>
+        
+        <div class="header" color="red">
+            HEADER
+        </div>
+        
+        <div class="zoneScroll" data-class="white"></div>
+        
+        <div class="zoneScroll zoneRed" data-class="red"></div>
+        <div class="zoneScroll zoneBlue" data-class="blue"></div>
+        <div class="zoneScroll zonePurple" data-class="purple"></div>
+        <div class="zoneScroll zoneCyan" data-class="cyan"></div>
+        <div class="zoneScroll zoneGreen" data-class="green"></div>
+        <div class="zoneScroll zoneYellow" data-class="yellow"></div>
+        
+        
+        <script type="text/javascript">
+            
+            const header = document.querySelector('.header')
+            const zones = document.querySelectorAll('.zoneScroll')
+            
+            window.addEventListener('scroll',e=>{
+                // console.log(window.scrollY)
+                
+                let color = "white"
+                zones.forEach(zone=>{
+                    const c = zone.getAttribute('data-class')
+                    const pos = zone.offsetTop
+                    // on compare la position des zones moins la hauteur du header avec la position du scroll
+                    if(pos-header.offsetHeight<window.scrollY) color = c
+                })
+                console.log(color)
+                header.setAttribute('color',color)
+            })
+            
+        </script>
+    </body>
+</html>

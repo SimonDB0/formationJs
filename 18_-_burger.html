@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <title>Exercice 18</title>
+        
+        <style>
+            
+            html,body{
+                scroll-behavior: smooth;
+            }
+            ul{
+                display: none;
+            }
+            
+            .menuOpened .burger{
+                background: red;
+            }
+            .menuOpened ul{
+                display: block;
+            }
+            
+            
+            .zonevide{
+                height: 1500px;
+            }
+        </style>
+        
+    </head>
+    <body>
+        
+        <button class="burger">BURGER</button>
+        
+        <ul>
+            <li><a href="#coucou">coucou</a></li>
+            <li><a href="#hello">hello</a></li>
+        </ul>
+        
+        <div class="zonevide"></div>
+        <div id="coucou"><h1>Coucou</h1><a href="#hello">Section suivante</a></div>
+        <div class="zonevide"></div>
+        <div id="hello"><h1>hello</h1><a href="#coucou">Section précédente</a></div>
+        <div class="zonevide"></div>
+        
+        
+        <script type="text/javascript">
+            
+            // ouverture et fermeture du menu
+            const burger = document.querySelector('.burger')
+            burger.addEventListener('click',e=>{
+                // alert('BEURGUEURRE !!!!!!!')
+                document.body.classList.toggle('menuOpened')
+            })
+            
+            // si on clique sur un élément du menu, on cache le menu
+            const linksMenu = document.querySelectorAll('ul a')
+            linksMenu.forEach(link=>{
+                link.addEventListener('click',e=>{
+                    document.body.classList.remove('menuOpened')
+                })
+            })
+            
+            
+            
+            // cibler tous les liens d'ancre et déplacer le scroll avec un décallage de 100px
+            const links = document.querySelectorAll('a')
+            links.forEach(link=>{
+                const url = link.getAttribute('href')
+                console.log(url)
+                if(url[0]=="#"){
+                    link.addEventListener('click',e=>{
+                        const cible = document.querySelector(link.getAttribute('href'))
+                        var position = cible.offsetTop - 100
+                        window.scrollTo(0,position)
+                        e.preventDefault()
+                    })
+                }
+            })
+            
+        </script>
+    </body>
+</html>

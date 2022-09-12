@@ -1,0 +1,134 @@
+<head>
+    <title>15 - Formulaire</title>
+	<style>
+		html,body{margin:0;padding:0;height:100%;width:100%;}
+		
+		.formulaire{max-width:500px;margin:auto;padding:50px 50px 30px 50px;border:1px solid #555;}
+		.formulaire h2:before{content:attr(jacky);}
+		.formulaire label{}
+		.formulaire input,
+		.formulaire select,
+		.formulaire textarea{display:block;width:100%;border:1px solid #555;font:inherit;margin-bottom:20px;}
+		.formulaire select.error,
+		.formulaire input.error,
+		.formulaire textarea.error{border-color:#f00;}
+		.formulaire textarea{}
+		.formulaire .password{position:relative;}
+		.formulaire .password .pass-strong{position:absolute;right:0;top:0;}
+		.formulaire input[type="radio"]{display:inline;width:auto;}
+		.formulaire input[type="checkbox"]{display:inline;width:auto;}
+		.formulaire input[type="checkbox"].error + label{color:#f00;}
+		.formulaire input[type="radio"].error + label{color:#f00;}
+		.formulaire .alert{color:#f00;font-size:0.7em;text-transform:uppercase;}
+		.formulaire .alert:before{content:" - ";}
+
+	</style>
+</head>
+<body>
+	<h1>Formulaire</h1>
+
+	
+	<div class="formulaire">
+		<h2 jacky="🚗">Formulaire 1</h2>
+		<form id="form1" action="" method="post">
+
+			<label for="form-name">Nom</label>
+			<input type="text" class="input" data-required="text" name="form-name" id="form-name" value="" />
+			
+			<label for="form-firstname">Prénom</label>
+			<input type="text" class="input" data-required="text" name="form-firstname" id="form-firstname" value="" />
+			
+			<div class="password">
+				<label for="form-password">Mot de passe</label>
+				<input type="password" class="input" data-required="password" name="form-password" id="form-password" value="" />
+				<div class="pass-strong"></div>
+			</div>
+
+			<label for="form-email">Email</label>
+			<input type="text" class="input" data-required="email" data-required-alert="Email invalide" name="form-email" id="form-email" value="" />
+			
+			<label for="form-subject">Sujet</label>
+			<select id="form-subject" name="form-subject" data-required="select">
+				<option value="" disabled="disabled" selected="selected"></option>
+				<option value="Après-vente">Après-vente</option>
+				<option value="Conseil à l'achat">Conseil à l'achat</option>
+				<option value="Service technique">Service technique</option>
+			</select>
+
+			<label for="form-message">Message</label>
+			<textarea type="text" name="form-message" data-required="text" class="input" id="form-message"></textarea>
+			
+			<div>
+				<input type="checkbox" name="form-confirm" data-required="cheched" id="form-confirm" value="confirm"><label for="form-confirm">J'accepte les conditions générales de vente</label>
+			</div>
+
+			<div>
+				<label>Satisfait?</label>
+				<input type="radio" name="form-happy" data-required="radio" id="form-happy-yes" value="yes"><label for="form-happy-yes">Oui</label>
+				<input type="radio" name="form-happy" data-required="radio" id="form-happy-no" value="no"><label for="form-happy-no">Non</label>
+			</div>
+			
+			<input type="submit" value="Envoyer" />
+
+		</form>
+
+	</div>
+	
+	<script type="text/javascript">
+		
+        const form = document.querySelector('#form1')
+        
+        form.onsubmit = (e)=>{
+            form.querySelectorAll('*[data-required]').forEach(elem=>{
+                const type = elem.getAttribute('data-required')
+                let value = elem.value
+                let error = false
+                
+                switch(type){
+                    case "text":
+                        if(value=="") error = true
+                    break
+                    case "email":
+                        if(!validateEmail(value)) error = true
+                    break
+                    case "select":
+                        if(value=="") error = true
+                    break
+                    case "cheched":
+                        if(!elem.checked) error = true
+                    break
+                    case "radio":
+                        const name = elem.getAttribute('name')
+                        let checked = false
+                        form.querySelectorAll(`input[name="${name}"]`).forEach(radio=>{
+                            if(radio.checked) checked = true
+                        })
+                        if(!checked) error = true
+                    break
+                    case "password":
+                        if(value=="") error = true
+                    break
+                }
+                
+                if(error) elem.classList.add("error")
+                else elem.classList.remove("error")
+            })
+            
+            e.stopPropagation()
+            return false
+        }
+        
+        
+        
+        
+        const validateEmail = (email) => {
+            return email.match(
+                /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            )
+        }
+    
+	</script>
+	
+	
+</body>
+</html>

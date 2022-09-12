@@ -1,0 +1,63 @@
+<head>
+    <title>17 - Ajax drapeaux</title>
+	<style>
+		
+        .datas{display:grid;grid-template-columns: repeat(15,1fr);}
+        .datas img{
+            width: 100%;
+        }
+
+	</style>
+</head>
+<body>
+	<h1>Ajax Drapeaux</h1>
+
+    <div class="datas">
+        
+    </div>
+	
+	<script type="text/javascript">
+        
+        // Fonction préparée pour récupérer un JSON en Ajax:
+        // const datas = loadJSON("mon_url")
+        const loadJSON = async (url)=>{
+            const datas = await fetch(url)
+            return datas.json()
+        }
+        
+        
+        // fonction qui récupère et affiche les drapeaux de tous les pays du monde
+        const drapeaux = async ()=>{
+            // Charge les données de manière asynchrone (met en pause la suite tant que ce n'est pas chargé)
+            const datasDrapeaux = await loadJSON('https://epse.wellens.cc/ajax/datas.json')
+            console.log(datasDrapeaux)
+            
+            // Cibler la DIV qui contiendra tous les drapeaux
+            const affichage = document.querySelector('.datas')
+            
+            // Boucler sur l'ensemble des données récupérées
+            datasDrapeaux.forEach(element => {
+                
+                const img = document.createElement('img')
+                img.src = element.flag
+                
+                // Ajouter l'image si elle est chargée
+                img.addEventListener('load', ()=>{
+                    affichage.appendChild(img)
+                })
+                // Ajouter une erreur dans les logs si l'image ne se charge pas
+                img.addEventListener('error', ()=>{
+                    console.log('error',element.iso,element.flag)
+                })
+                
+            })
+            
+        }
+        // appeler la fonction pour lancer tout le processus
+        drapeaux()
+ 
+	</script>
+	
+	
+</body>
+</html>

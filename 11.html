@@ -1,0 +1,115 @@
+<html>
+    <head>
+        <title>Exerccie 11</title>
+        
+        <style>
+            body{
+                padding: 0;
+                margin: 0;
+                background: #f0d0a1;
+            }
+            
+            .yeux{
+                position: absolute;
+                left: 50vw;
+                top: 50vh;
+                transform: translate(-50%,-50%);
+                width: 40vw;
+                height: 20vw;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .yeux .oeil{
+                display: block;
+                width: 45%;
+                height: 90%;
+                background: #fff;
+                position: relative;
+                border-radius: 50%;
+            }
+            .yeux .oeil span{
+                display: block;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%,-50%);
+                width: 20%;
+                height: 20%;
+                border-radius: 50%;
+                background: #000;
+            }
+            .yeux .oeil strong{
+                display: block;
+                opacity: 0.2;
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                background: #f00;
+                width: 50%;
+                height: 1px;
+                transform-origin: left center;
+            }
+            
+        </style>
+        
+    </head>
+    <body>
+
+        <div class="zone">
+            
+            <div class="yeux">
+                <div class="oeil"><span></span><strong></strong></div>
+                <div class="oeil"><span></span><strong></strong></div>
+            </div>
+            
+        </div>
+        
+        <script type="text/javascript">
+            
+            const yeux = document.querySelectorAll('.oeil')
+            yeux.forEach(oeil => {
+                const regard = oeil.querySelector('span')
+                const direction = oeil.querySelector('strong')
+            
+                window.addEventListener('mousemove',e=>{
+                    
+                    let x = oeil.getBoundingClientRect().left+oeil.offsetWidth/2
+                    let y = oeil.getBoundingClientRect().top+oeil.offsetHeight/2
+                    
+                    let radian = Math.atan2(e.pageX-x,e.pageY-y)
+                    let rotation = - radian * 180/Math.PI + 90
+                    let distance = Math.sqrt(Math.pow(e.pageX-x,2)+Math.pow(e.pageY-y,2)) / (oeil.offsetWidth/2)
+                    
+                    direction.style.transform = `rotate(${rotation}deg)`
+                    regard.style.left = Math.sin(radian)*30*Math.min(1,distance/4) + 50 + '%'
+                    regard.style.top = Math.cos(radian)*30*Math.min(1,distance/4) + 50 + '%'
+                    
+                    
+                    console.log(distance)
+                    
+                    
+                    
+                    /*
+                    
+                    const parentX = oeil.offsetParent.offsetLeft - oeil.offsetParent.offsetWidth/2
+                    const parentY = oeil.offsetParent.offsetTop - oeil.offsetParent.offsetHeight/2
+                    
+                    move.left = (e.pageX-oeil.offsetLeft-parentX) / oeil.offsetWidth * 2 -1
+                    move.top = (e.pageY-oeil.offsetTop-parentY) / oeil.offsetHeight * 2 -1
+                    
+                    console.log(move)
+                    
+                    regard.style.top = move.top*50 + 50 + "%"
+                    regard.style.left = move.left*50 + 50 + "%"
+                    
+                    console.log(Math.acos(Math.min(1,move.left))*180/Math.PI)
+                    console.log(Math.asin(move.top)*180/Math.PI)
+                    */
+                })
+            })
+            
+            
+        </script>
+    </body>
+</html>

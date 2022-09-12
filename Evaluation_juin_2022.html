@@ -1,0 +1,151 @@
+<html>
+<head>
+    <title>Evaluation juin 2022</title>
+	<style>
+		
+
+	</style>
+</head>
+<body>
+    
+    
+	<h1>Exercice 1</h1>
+    <p>Résultat dans la console</p>
+    <script type="text/javascript">
+        console.log("--------------------------- Exercice 1")
+        let price = 98
+        let total = price* (1-0.4) + 5
+        console.log("Total :",total.toFixed(2).replace('.',',')+"€")
+    </script>
+
+    
+    
+    <h1>Exercice 2</h1>
+    <p>Résultat dans la console</p>
+    <script type="text/javascript">
+        console.log("--------------------------- Exercice 2")
+        let cash = "129,55€"
+        cash = parseFloat(cash.replace(',','.'))
+        const money = [50,20,10,5,2,1,0.5,0.2,0.1,0.05,0.02,0.01]
+        for(m of money){
+            let quant = Math.floor(cash/m)
+            if(quant>0){
+                if(m>=1) console.log(m+"€ :",quant+"x")
+                else console.log((m*100)+"c :",quant+"x")
+                cash = cash%m
+            }
+        }
+    </script>
+    
+    
+    
+    <h1>Exercice 3</h1>
+    <p>Voir dans le coin en bas à droite le copyright EPSE</p>
+    <script type="text/javascript">
+        // console.log("--------------------------- Exercice 3")
+        const copyright = document.createElement('div')
+        copyright.classList.add('copyright')
+        copyright.innerHTML = "EPSE 2022"
+        document.body.appendChild(copyright)
+        copyright.style.cssText = `
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            background: #cccccc;
+            border: 1px solid #000000;
+            padding: 5px;
+        `
+    </script>
+    
+    
+    
+    <h1>Exercice 4</h1>
+    <ol>
+        <li><strong>Pain</strong></li>
+        <li>Biscuits</li>
+        <li>Nutella</li>
+        <li><strong>Légumes</strong></li>
+        <li>Frites</li>
+    </ol>
+    <script type="text/javascript">
+        console.log("--------------------------- Exercice 4")
+        const courses = document.querySelectorAll('ol li')
+        const tab = []
+        courses.forEach(li=>{
+            let value = li.textContent
+            if(li.querySelectorAll('strong').length>0) value+=" !!!"
+            tab.push(value)
+        })
+        console.log(tab)
+    </script>
+    
+    
+    
+    <h1>Exercice 5</h1>
+    <button class="increment"></button>
+    <script type="text/javascript">
+        // console.log("--------------------------- Exercice 5")
+        const btn_increment = document.querySelector('.increment')
+        let increment = localStorage.getItem('increment')? localStorage.getItem('increment') : 0
+        btn_increment.addEventListener('click',e=>{
+            increment++
+            btn_increment.innerHTML = increment
+            localStorage.setItem('increment',increment)
+        })
+        btn_increment.innerHTML = increment
+    </script>
+    
+    
+    
+    <h1>Exercice 6</h1>
+    <p>Voir le résultat dans l'HTML lorsqu'on scroll</p>
+    <script type="text/javascript">
+        // console.log("--------------------------- Exercice 6")
+        document.addEventListener('scroll',e=>{
+            if(window.scrollY>=1) document.body.classList.add('scrolled')
+            else document.body.classList.remove('scrolled')
+        })
+    </script>
+    
+    
+    
+    <h1>Exercice 7</h1>
+    <p><input type="text" value="" id="inputKey" /></p>
+    <p class="affiche"></p>
+    <script type="text/javascript">
+        // console.log("--------------------------- Exercice 7")
+        const inputKey = document.getElementById('inputKey')
+        const inputContent = document.querySelector('.affiche')
+        inputKey.addEventListener('keyup',e=>{
+            if(e.keyCode>=32) inputContent.innerHTML+=e.key
+            inputKey.value = ""
+        })
+    </script>
+    
+    
+    
+    <h1>Exercice 8</h1>
+    <p class="vimeo"></p>
+    <script type="text/javascript">
+        // console.log("--------------------------- Exercice 8")
+        const vimeo = document.querySelector('.vimeo')
+        fetch('http://vimeo.com/api/v2/video/362490318.json')
+            .then(function(response) {
+                return response.json()
+            })
+            .then(function(reponse) {
+                constructionVimeo(reponse[0])
+            })
+        const constructionVimeo = data =>{
+            vimeo.innerHTML = `
+                <img src="${data.thumbnail_large}" /><br />
+                ${data.title}<br />
+                <a href="${data.url}">Voir la vidéo</a>
+            `
+        }
+    </script>
+	
+	
+    
+</body>
+</html>
