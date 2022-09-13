@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice Google map </title>
+
+    <style>
+        body{
+            background-color: black;
+            color: green;
+        }
+        #map{
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+    
+</head>
+<body>
+        <div id="map"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzTGB0dYZeBxuYbGpWqS5PXhDhPk-shew"></script>
+    <script type="text/javascript">
+        const initMap = ()=>{
+            console.log("Map chargée")
+
+            const container = document.querySelector('#map')
+            const mapOptions = ({
+                center: new google.maps.LatLng(50.64312880202458, 4.0689780139165155),
+                zoom: 16 ,
+                mapTypeControl: false,
+                scrollwheel : false,
+                streetViewControl : false
+                
+            })
+            const map = new google.maps.Map(container,mapOptions)
+            const styleMap = [{"stylers":[{"hue":"#ff1a00"},{"invert_lightness":true},{"saturation":-100},{"lightness":33},{"gamma":0.5}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#2D333C"}]}]
+            map.setOptions({styles:styleMap})
+            const marker = new google.maps.Marker({
+                position: new google.maps.LatLng(50.64312880202458, 4.0689780139165155),
+                map : map,
+                title : "Sheshh !!"
+            })
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: "sheesh!"
+            })
+            google.maps.event.addListener(marker,'click',function(){
+                infoWindow.open(map,marker)
+            })
+        }
+
+        google.maps.event.addDomListener(window,'load',initMap)
+        </script>
+        <h1>Gauthier jtm bb</h1>
+</body>
+</html>
